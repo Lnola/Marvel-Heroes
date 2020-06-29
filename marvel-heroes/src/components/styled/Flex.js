@@ -54,14 +54,7 @@ export const FlexSpan = styled.span`
 `;
 
 export const FlexNav = styled.nav`
-  position: fixed;
-  top: 0;
-  background-position: center;
-  backgorund-size: cover;
   ${flex};
 `;
 
 export default Flex;
-
-// background-image: url(https://www.worldofwallpaper.com/media/catalog/product/m/a/mar128_marvel_comic_strip_wallpaper_black_white_ae1.jpg);
-// background-image: url(https://cdn.wallpapersafari.com/64/6/GI0ZzL.jpg);

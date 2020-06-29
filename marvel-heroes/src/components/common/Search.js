@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledInput = styled.input`
   width: 30%;
-  height: 30%;
+  height: 35%;
   font-size: 100%;
   padding: 1%;
   box-sizing: border-box;
@@ -14,12 +14,14 @@ const StyledInput = styled.input`
   }
 `;
 
-const Search = ({ searchForCharacter }) => {
+const Search = ({ searchForCharacter, setCharactersArray }) => {
   const [input, setInput] = useState("");
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
-    searchForCharacter(e.target.value);
+    e.target.value.length !== 0
+      ? searchForCharacter(e.target.value)
+      : setCharactersArray(JSON.parse(localStorage.getItem("bookmarks")));
   };
 
   return <StyledInput value={input} onChange={handleInputChange} autoFocus />;
