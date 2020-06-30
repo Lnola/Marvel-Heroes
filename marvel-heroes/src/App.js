@@ -1,37 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getCharacters } from "./services/characters";
 import Character from "./components/common/Character";
-import { FlexMain, FlexSection, FlexNav } from "./components/styled/Flex";
-import "./styles.css";
 import Search from "./components/common/Search";
-import styled, { css } from "styled-components";
-import Background from "./assets/images/background.png";
-
-const NoCharacters = styled.span`
-  position: absolute;
-  top: 50%;
-`;
-
-const NavCss = css`
-  position: fixed;
-  top: 0;
-  background-image: url(${Background});
-  background-size: 10%;
-  background-position: center;
-  background-color: white;
-  border-bottom: 1px solid black;
-  z-index: 1;
-`;
-
-const ContentCss = css`
-  overflow: visible;
-`;
+import { FlexMain, FlexSection, FlexNav } from "./components/styled/Flex";
+import { NoCharacters, NavCss, ContentCss } from "./components/styled/App";
+import { setCharactersToLocalStorage } from "./utils/setCharactersToLocalStorage";
+import { getCharacters } from "./services/characters";
+import "./styles.css";
 
 const App = () => {
   const [charactersArray, setCharactersArray] = useState([]);
 
   useEffect(() => {
-    setCharactersArray(JSON.parse(localStorage.getItem("bookmarks")));
+    setCharactersToLocalStorage(setCharactersArray);
   }, []);
 
   const searchForCharacter = (input) => {
@@ -44,7 +24,6 @@ const App = () => {
   return (
     <>
       <FlexNav
-        height="19%"
         width="100%"
         alignItems="center"
         justifyContent="center"
@@ -56,7 +35,7 @@ const App = () => {
         />
       </FlexNav>
 
-      <FlexMain width="100%" justifyContent="center" margin="12% 0 0 0">
+      <FlexMain width="100%" justifyContent="center">
         <FlexSection
           width="65%"
           justifyContent="space-around"
@@ -65,7 +44,11 @@ const App = () => {
         >
           {charactersArray && charactersArray.length !== 0 ? (
             charactersArray.map((character, index) => (
-              <Character key={index} character={character} />
+              <Character
+                key={index}
+                character={character}
+                setCharactersArray={setCharactersArray}
+              />
             ))
           ) : (
             <NoCharacters>Search for characters...</NoCharacters>
