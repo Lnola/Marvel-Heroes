@@ -27,7 +27,6 @@ export const NavCss = css`
 `;
 
 export const ContentCss = css`
-  overflow: visible;
   margin-top: 12%;
 
   @media (max-width: 900px) {

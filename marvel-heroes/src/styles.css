@@ -1,6 +1,16 @@
 * {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   font-family: "Segoe UI";
+}
+
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
+
+.infinite-scroll-component {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: visible !important;
 }

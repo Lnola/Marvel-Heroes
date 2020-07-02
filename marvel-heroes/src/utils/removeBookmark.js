@@ -1,13 +1,13 @@
-import { setCharactersToLocalStorage } from "./setCharactersToLocalStorage";
+import {
+  setBookmarkedCharacters,
+  getBookmarkedCharacters,
+} from "./bookmarkedCharacters";
+import { SET_BOOKMARKED_CHARACTERS } from "../store/redux";
 
-export const removeBookmark = (
-  character,
-  setIsBookmarked,
-  setCharactersArray
-) => {
+export const removeBookmark = (character, setIsBookmarked, dispatch) => {
   let bookmarksArray = [];
   if (localStorage.getItem("bookmarks"))
-    bookmarksArray = JSON.parse(localStorage.getItem("bookmarks"));
+    bookmarksArray = getBookmarkedCharacters();
 
   let index;
   bookmarksArray.forEach((bookmark, id) => {
@@ -15,8 +15,8 @@ export const removeBookmark = (
   });
 
   bookmarksArray.splice(index, 1);
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarksArray));
+  setBookmarkedCharacters(bookmarksArray);
   setIsBookmarked(false);
 
-  setCharactersToLocalStorage(setCharactersArray);
+  dispatch({ type: SET_BOOKMARKED_CHARACTERS });
 };

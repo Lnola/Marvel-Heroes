@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Character from "./components/common/Character";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Search from "./components/common/Search";
+import List from "./components/common/List";
+import Loading from "./components/common/Loading";
+import { NavCss, ContentCss } from "./components/styled/App";
 import { FlexMain, FlexSection, FlexNav } from "./components/styled/Flex";
-import { NoCharacters, NavCss, ContentCss } from "./components/styled/App";
-import { setCharactersToLocalStorage } from "./utils/setCharactersToLocalStorage";
-import { getCharacters } from "./services/characters";
+import { SET_BOOKMARKED_CHARACTERS } from "./store/redux";
 import "./styles.css";
 
 const App = () => {
-  const [charactersArray, setCharactersArray] = useState([]);
+  const charactersArray = useSelector((state) => state.characters);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setCharactersToLocalStorage(setCharactersArray);
-  }, []);
-
-  const searchForCharacter = (input) => {
-    setCharactersArray([]);
-    getCharacters(input).then(({ data }) =>
-      setCharactersArray(data.data.results)
-    );
-  };
+    dispatch({ type: SET_BOOKMARKED_CHARACTERS });
+  }, [dispatch]);
 
   return (
     <>
@@ -29,29 +24,15 @@ const App = () => {
         justifyContent="center"
         css={NavCss}
       >
-        <Search
-          searchForCharacter={searchForCharacter}
-          setCharactersArray={setCharactersArray}
-        />
+        <Search />
       </FlexNav>
 
       <FlexMain width="100%" justifyContent="center">
-        <FlexSection
-          width="65%"
-          justifyContent="space-around"
-          wrap="wrap"
-          css={ContentCss}
-        >
+        <FlexSection width="65%" justifyContent="center" css={ContentCss}>
           {charactersArray && charactersArray.length !== 0 ? (
-            charactersArray.map((character, index) => (
-              <Character
-                key={index}
-                character={character}
-                setCharactersArray={setCharactersArray}
-              />
-            ))
+            <List />
           ) : (
-            <NoCharacters>Search for characters...</NoCharacters>
+            <Loading />
           )}
         </FlexSection>
       </FlexMain>

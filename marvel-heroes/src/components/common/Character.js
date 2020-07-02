@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { addBookmark } from "../../utils/addBookmark";
 import { removeBookmark } from "../../utils/removeBookmark";
 import { setArticleSizeToStandard } from "../../utils/setArticleSizeToStandard";
@@ -15,6 +16,7 @@ import {
 const Character = ({ character, setCharactersArray }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [articleSize, setArticleSize] = useState({ width: "", height: "" });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const bookmarksArray = localStorage.getItem("bookmarks");
@@ -28,6 +30,15 @@ const Character = ({ character, setCharactersArray }) => {
       setArticleSizeToStandard(setArticleSize)
     );
   }, []);
+
+  if (character === null)
+    return (
+      <FlexArticle
+        height={articleSize.height}
+        width={articleSize.width}
+        margin="0 0 2% 0"
+      />
+    );
 
   return (
     <FlexArticle
@@ -46,9 +57,7 @@ const Character = ({ character, setCharactersArray }) => {
         <CharacterName>{character.name}</CharacterName>
         {isBookmarked ? (
           <span
-            onClick={() =>
-              removeBookmark(character, setIsBookmarked, setCharactersArray)
-            }
+            onClick={() => removeBookmark(character, setIsBookmarked, dispatch)}
           >
             <BookmarkState src={Bookmarked} alt="Bookmarked" />
           </span>
