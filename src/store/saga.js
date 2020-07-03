@@ -11,9 +11,10 @@ import {
 } from "./redux";
 
 function* fetchCharacters({ nameStartsWith, startIndex }) {
-  if (nameStartsWith.length === 0)
+  if (nameStartsWith.length === 0) {
     yield put({ type: SET_BOOKMARKED_CHARACTERS });
-  else
+    yield put({ type: UPDATE_IS_LOADING, payload: false });
+  } else
     try {
       const characters = yield call(getCharacters, nameStartsWith, startIndex);
 

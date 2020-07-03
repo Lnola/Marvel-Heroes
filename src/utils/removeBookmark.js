@@ -2,7 +2,7 @@ import {
   setBookmarkedCharacters,
   getBookmarkedCharacters,
 } from "./bookmarkedCharacters";
-import { SET_BOOKMARKED_CHARACTERS } from "../store/redux";
+import { SET_BOOKMARKED_CHARACTERS, UPDATE_IS_LOADING } from "../store/redux";
 
 export const removeBookmark = (character, setIsBookmarked, dispatch) => {
   let bookmarksArray = [];
@@ -19,4 +19,5 @@ export const removeBookmark = (character, setIsBookmarked, dispatch) => {
   setIsBookmarked(false);
 
   dispatch({ type: SET_BOOKMARKED_CHARACTERS });
+  dispatch({ type: UPDATE_IS_LOADING, payload: false });
 };
